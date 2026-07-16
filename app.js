@@ -239,7 +239,7 @@
 
   function makeAmbientParticles() {
     elements.ambientParticles.replaceChildren();
-    const count = state.motion === "full" ? 16 : state.motion === "reduced" ? 6 : 0;
+    const count = state.motion === "full" ? (coarsePointer.matches ? 5 : 12) : state.motion === "reduced" ? 4 : 0;
     const fragment = document.createDocumentFragment();
     for (let index = 0; index < count; index += 1) {
       const particle = document.createElement("span");
@@ -558,19 +558,20 @@
     }, delay);
   }
 
-  async function switchView(next) {
+  async function switchView(next, beforeEnter = null) {
     if (activeView === next) return;
     const previous = activeView;
     previous.classList.add("is-leaving");
-    const delay = state.motion === "off" ? 5 : 390;
+    const delay = state.motion === "off" ? 5 : 260;
     await new Promise((resolve) => window.setTimeout(resolve, delay));
     previous.hidden = true;
     previous.classList.remove("is-active", "is-leaving");
+    if (beforeEnter) beforeEnter();
     next.hidden = false;
     next.classList.add("is-active", "is-entering");
     activeView = next;
-    window.scrollTo({ top: 0, behavior: state.motion === "full" ? "smooth" : "auto" });
-    window.setTimeout(() => next.classList.remove("is-entering"), 800);
+    window.scrollTo({ top: 0, behavior: "auto" });
+    window.setTimeout(() => next.classList.remove("is-entering"), 560);
   }
 
   function renderJourneyScene({ arriving = false } = {}) {
@@ -596,36 +597,40 @@
       elements.journeyPanel.classList.remove("is-diving-out", "is-arriving");
       void elements.journeyPanel.offsetWidth;
       elements.journeyPanel.classList.add("is-arriving");
-      window.setTimeout(() => elements.journeyPanel.classList.remove("is-arriving"), 900);
+      window.setTimeout(() => elements.journeyPanel.classList.remove("is-arriving"), 540);
     }
   }
 
   async function advanceJourney() {
     if (journeyLocked) return;
     journeyLocked = true;
-    burstFromElement(elements.journeyNextButton, { strength: "small", variant: "up" });
+    elements.journeyNextButton.disabled = true;
     audio.play(journeyIndex === journeyScenes.length - 1 ? "sparkle" : "click");
     elements.depthWorld.classList.add("is-advancing");
     elements.journeyPanel.classList.add("is-diving-out");
 
-    const travelDelay = state.motion === "off" ? 10 : 760;
+    const travelDelay = state.motion === "off" ? 10 : state.motion === "reduced" ? 260 : 460;
     await new Promise((resolve) => window.setTimeout(resolve, travelDelay));
 
     if (journeyIndex < journeyScenes.length - 1) {
       journeyIndex += 1;
       elements.depthWorld.classList.remove("is-advancing");
       renderJourneyScene({ arriving: true });
+      await new Promise((resolve) => window.setTimeout(resolve, state.motion === "off" ? 10 : state.motion === "reduced" ? 220 : 420));
+      elements.journeyNextButton.disabled = false;
       journeyLocked = false;
       return;
     }
 
     elements.depthWorld.classList.add("is-final-dive");
-    await new Promise((resolve) => window.setTimeout(resolve, state.motion === "off" ? 10 : 520));
-    body.classList.remove("is-journeying");
-    delete root.dataset.journey;
-    await switchView(elements.complimentView);
+    await new Promise((resolve) => window.setTimeout(resolve, state.motion === "off" ? 10 : 260));
+    await switchView(elements.complimentView, () => {
+      body.classList.remove("is-journeying");
+      delete root.dataset.journey;
+    });
     elements.depthWorld.classList.remove("is-advancing", "is-final-dive");
     elements.journeyPanel.classList.remove("is-diving-out", "is-arriving");
+    elements.journeyNextButton.disabled = false;
     nextCompliment();
     journeyLocked = false;
   }
@@ -644,10 +649,9 @@
     }
     journeyIndex = 0;
     renderJourneyScene();
-    body.classList.add("is-journeying");
-    const delay = state.motion === "off" ? 20 : 900;
+    const delay = state.motion === "off" ? 20 : 480;
     await new Promise((resolve) => window.setTimeout(resolve, delay));
-    await switchView(elements.journeyView);
+    await switchView(elements.journeyView, () => body.classList.add("is-journeying"));
     elements.openGiftButton.disabled = false;
     elements.openGiftButton.classList.remove("is-opening");
   }

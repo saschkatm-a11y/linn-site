@@ -451,11 +451,11 @@ body.is-paused .hero-heart {
 }
 
 .view.is-entering {
-  animation: view-enter 700ms var(--ease-out) both;
+  animation: view-enter 480ms var(--ease-out) both;
 }
 
 .view.is-leaving {
-  animation: view-leave 420ms ease both;
+  animation: view-leave 260ms ease both;
   pointer-events: none;
 }
 
@@ -775,6 +775,14 @@ body.is-journeying {
   overflow: hidden;
 }
 
+body.is-journeying .ambient {
+  visibility: hidden;
+}
+
+body.is-journeying .ambient * {
+  animation-play-state: paused !important;
+}
+
 body.is-journeying .topbar {
   position: absolute;
   left: 50%;
@@ -799,7 +807,7 @@ body.is-journeying .main-content {
 }
 
 .view--journey.is-entering {
-  animation: journey-view-enter 900ms var(--ease-out) both;
+  animation: journey-view-enter 480ms var(--ease-out) both;
 }
 
 .depth-world {
@@ -818,7 +826,6 @@ body.is-journeying .main-content {
   perspective: 1050px;
   perspective-origin: 50% 50%;
   transform-style: preserve-3d;
-  transition: background 850ms ease;
 }
 
 html[data-journey="2"] .depth-world {
@@ -853,10 +860,7 @@ html[data-journey="5"] .depth-world {
     radial-gradient(circle at 50% 50%, var(--scene-glow), transparent 24%),
     radial-gradient(circle at 22% 28%, color-mix(in srgb, var(--scene-a) 42%, transparent), transparent 25%),
     radial-gradient(circle at 80% 72%, color-mix(in srgb, var(--scene-a) 26%, transparent), transparent 26%);
-  filter: blur(3px);
   transform: translateZ(-500px) scale(1.6);
-  transition: background 850ms ease;
-  animation: journey-sky-breathe 9s ease-in-out infinite alternate;
 }
 
 .depth-world::before,
@@ -875,8 +879,6 @@ html[data-journey="5"] .depth-world {
   width: min(68vw, 760px);
   aspect-ratio: 1;
   background: radial-gradient(circle, transparent 43%, color-mix(in srgb, var(--scene-a) 19%, transparent) 58%, transparent 72%);
-  filter: blur(18px);
-  animation: portal-breathe 4.6s ease-in-out infinite;
 }
 
 .depth-world::after {
@@ -884,7 +886,6 @@ html[data-journey="5"] .depth-world {
   aspect-ratio: 1;
   background: radial-gradient(circle, rgba(255,255,255,.1), var(--scene-glow) 18%, transparent 68%);
   opacity: .44;
-  filter: blur(22px);
 }
 
 .depth-world__stars {
@@ -932,7 +933,6 @@ html[data-journey="5"] .depth-world {
   box-shadow: 0 0 24px color-mix(in srgb, var(--scene-a) 12%, transparent), inset 0 0 20px color-mix(in srgb, var(--scene-a) 8%, transparent);
   opacity: var(--ring-opacity);
   transform: translateZ(var(--ring-z)) rotate(var(--ring-rotation));
-  animation: depth-ring-breathe 5.5s ease-in-out var(--ring-delay) infinite alternate;
 }
 
 .depth-tunnel i:nth-child(1) { --ring-size: 165px; --ring-z: -80px; --ring-rotation: 0deg; --ring-opacity: .3; --ring-delay: 0ms; }
@@ -965,9 +965,9 @@ html[data-journey="5"] .depth-world {
   filter: drop-shadow(0 0 12px var(--scene-a));
 }
 
-.depth-orbit--one { transform: translate(-50%, -50%) rotateX(72deg) rotateZ(-18deg); animation: orbit-one 19s linear infinite; }
-.depth-orbit--two { width: min(64vw, 710px); transform: translate(-50%, -50%) rotateY(69deg) rotateZ(22deg); animation: orbit-two 24s linear infinite reverse; }
-.depth-orbit--three { width: min(48vw, 520px); transform: translate(-50%, -50%) rotateX(58deg) rotateY(26deg); animation: orbit-one 15s linear infinite reverse; }
+.depth-orbit--one { transform: translate(-50%, -50%) rotateX(72deg) rotateZ(-18deg); }
+.depth-orbit--two { width: min(64vw, 710px); transform: translate(-50%, -50%) rotateY(69deg) rotateZ(22deg); }
+.depth-orbit--three { width: min(48vw, 520px); transform: translate(-50%, -50%) rotateX(58deg) rotateY(26deg); }
 
 .journey-progress {
   position: absolute;
@@ -1009,14 +1009,11 @@ html[data-journey="5"] .depth-world {
   overflow: hidden;
   border: 1px solid rgba(255, 232, 235, .18);
   border-radius: 36px;
-  background: linear-gradient(145deg, rgba(255,255,255,.095), rgba(255,255,255,.025)), rgba(22, 10, 26, .48);
-  box-shadow: 0 45px 130px rgba(5, 2, 11, .55), inset 0 1px rgba(255,255,255,.08), 0 0 90px color-mix(in srgb, var(--scene-a) 13%, transparent);
+  background: linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.025)), rgba(29, 13, 32, .82);
+  box-shadow: 0 38px 100px rgba(5, 2, 11, .48), inset 0 1px rgba(255,255,255,.08), 0 0 70px color-mix(in srgb, var(--scene-a) 11%, transparent);
   text-align: center;
-  backdrop-filter: blur(28px) saturate(125%);
-  -webkit-backdrop-filter: blur(28px) saturate(125%);
   transform: translateZ(80px);
   transform-style: preserve-3d;
-  will-change: transform, opacity, filter;
 }
 
 .journey-panel::before {
@@ -1036,11 +1033,9 @@ html[data-journey="5"] .depth-world {
   height: 240px;
   border-radius: 50%;
   background: radial-gradient(circle, var(--scene-glow), transparent 68%);
-  filter: blur(22px);
   opacity: .42;
   pointer-events: none;
   transform: translate(-50%, -54%);
-  transition: background 850ms ease;
 }
 
 .journey-panel > *:not(.journey-panel__aura) {
@@ -1061,7 +1056,6 @@ html[data-journey="5"] .depth-world {
   box-shadow: 0 0 38px var(--scene-glow), inset 0 0 24px rgba(255,255,255,.04);
   font-family: Georgia, serif;
   font-size: 27px;
-  animation: journey-symbol-pulse 3.2s ease-in-out infinite;
 }
 
 .journey-panel h2 {
@@ -1101,6 +1095,7 @@ html[data-journey="5"] .depth-world {
 }
 
 .journey-next:hover > span:last-child { transform: translateX(4px); }
+.journey-next:disabled { opacity: 1; cursor: default; }
 
 .journey-hint {
   margin: 11px 0 0;
@@ -1144,19 +1139,20 @@ html[data-journey="5"] .depth-world {
 }
 
 .journey-panel.is-diving-out {
-  animation: journey-panel-through 760ms cubic-bezier(.55, .02, .78, .35) both;
+  animation: journey-panel-through 460ms cubic-bezier(.45, .02, .72, .35) both;
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
 .journey-panel.is-arriving {
-  animation: journey-panel-arrive 880ms var(--ease-out) both;
+  animation: journey-panel-arrive 520ms var(--ease-out) both;
+  will-change: transform, opacity;
 }
 
-.depth-world.is-advancing .depth-world__stars--far { animation: journey-stars-rush 780ms cubic-bezier(.2,.65,.3,1) both; }
-.depth-world.is-advancing .depth-world__stars--near { animation: journey-stars-rush-near 780ms cubic-bezier(.2,.65,.3,1) both; }
-.depth-world.is-advancing .depth-tunnel { animation: journey-tunnel-rush 780ms cubic-bezier(.2,.7,.25,1) both; }
-.depth-world.is-advancing .depth-orbit { animation-duration: 700ms; }
-.depth-world.is-final-dive::after { animation: journey-final-light 900ms ease-out both; }
+.depth-world.is-advancing .depth-world__stars--far { animation: journey-stars-rush 460ms cubic-bezier(.2,.65,.3,1) both; }
+.depth-world.is-advancing .depth-world__stars--near { animation: journey-stars-rush-near 460ms cubic-bezier(.2,.65,.3,1) both; }
+.depth-world.is-advancing .depth-tunnel { animation: journey-tunnel-rush 460ms cubic-bezier(.2,.7,.25,1) both; }
+.depth-world.is-final-dive::after { animation: journey-final-light 520ms ease-out both; }
 
 .random-promise {
   margin: 0 4px 16px;
@@ -1593,34 +1589,28 @@ html[data-time="night"] .night-moon { display: block; animation: moon-float 6s e
 @keyframes gift-lid { 60%, 100% { transform: translate(-4px, -7px) rotate(-24deg); opacity: 0; } }
 @keyframes fetch-heart { 50% { transform: translateY(-7px) scale(1.4) rotate(10deg); } }
 @keyframes ripple { to { transform: translate(-50%, -50%) scale(18); opacity: 0; } }
-@keyframes view-enter { from { opacity: 0; transform: translateY(24px) scale(.985); filter: blur(8px); } to { opacity: 1; transform: none; filter: blur(0); } }
-@keyframes view-leave { to { opacity: 0; transform: translateY(-15px) scale(.985); filter: blur(7px); } }
-@keyframes journey-view-enter { from { opacity: 0; filter: blur(18px); transform: scale(.82); } to { opacity: 1; filter: blur(0); transform: scale(1); } }
-@keyframes journey-sky-breathe { to { transform: translateZ(-500px) scale(1.7) rotate(2deg); } }
-@keyframes portal-breathe { 50% { opacity: .7; transform: translate(-50%, -50%) scale(1.08) rotate(5deg); } }
-@keyframes depth-ring-breathe { to { border-radius: 54% 46% 52% 48%; transform: translateZ(calc(var(--ring-z) + 10px)) rotate(calc(var(--ring-rotation) + 8deg)) scale(1.035); } }
-@keyframes orbit-one { to { transform: translate(-50%, -50%) rotateX(72deg) rotateZ(342deg); } }
-@keyframes orbit-two { to { transform: translate(-50%, -50%) rotateY(69deg) rotateZ(382deg); } }
-@keyframes journey-symbol-pulse { 50% { transform: translateZ(18px) scale(1.06); box-shadow: 0 0 52px var(--scene-glow), inset 0 0 30px rgba(255,255,255,.07); } }
+@keyframes view-enter { from { opacity: 0; transform: translateY(16px) scale(.99); } to { opacity: 1; transform: none; } }
+@keyframes view-leave { to { opacity: 0; transform: translateY(-10px) scale(.99); } }
+@keyframes journey-view-enter { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: scale(1); } }
 @keyframes journey-panel-through {
-  0% { opacity: 1; filter: blur(0); transform: translateZ(80px) scale(1); }
-  38% { opacity: 1; filter: blur(0); transform: translateZ(260px) scale(1.12); }
-  100% { opacity: 0; filter: blur(15px); transform: translateZ(980px) scale(2.25); }
+  0% { opacity: 1; transform: translateZ(80px) scale(1); }
+  42% { opacity: 1; transform: translateZ(240px) scale(1.1); }
+  100% { opacity: 0; transform: translateZ(760px) scale(1.85); }
 }
 @keyframes journey-panel-arrive {
-  from { opacity: 0; filter: blur(18px); transform: translateZ(-880px) scale(.54); }
-  72% { opacity: 1; filter: blur(0); transform: translateZ(105px) scale(1.015); }
-  to { opacity: 1; filter: blur(0); transform: translateZ(80px) scale(1); }
+  from { opacity: 0; transform: translateZ(-620px) scale(.68); }
+  76% { opacity: 1; transform: translateZ(96px) scale(1.01); }
+  to { opacity: 1; transform: translateZ(80px) scale(1); }
 }
 @keyframes journey-stars-rush {
-  from { opacity: .42; background-size: 62px 62px; transform: translateZ(-360px) scale(1.42) rotate(7deg); }
-  to { opacity: .1; background-size: 240px 240px; transform: translateZ(520px) scale(3.1) rotate(12deg); }
+  from { opacity: .42; transform: translateZ(-360px) scale(1.42) rotate(7deg); }
+  to { opacity: .08; transform: translateZ(420px) scale(2.8) rotate(9deg); }
 }
 @keyframes journey-stars-rush-near {
-  from { opacity: .24; background-size: 118px 118px, 173px 173px; transform: translateZ(-80px) scale(1.1) rotate(-5deg); }
-  to { opacity: 0; background-size: 430px 430px, 610px 610px; transform: translateZ(780px) scale(3.8) rotate(-12deg); }
+  from { opacity: .24; transform: translateZ(-80px) scale(1.1) rotate(-5deg); }
+  to { opacity: 0; transform: translateZ(520px) scale(3) rotate(-8deg); }
 }
-@keyframes journey-tunnel-rush { to { opacity: 0; filter: blur(5px); transform: translateZ(780px) scale(3.6); } }
+@keyframes journey-tunnel-rush { to { opacity: 0; transform: translateZ(520px) scale(2.8); } }
 @keyframes journey-final-light { 0% { opacity: .44; transform: translate(-50%, -50%) scale(1); } 55% { opacity: .95; transform: translate(-50%, -50%) scale(3.2); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(7); } }
 @keyframes rare-sparkle { to { transform: rotate(360deg); } }
 @keyframes compliment-fade { from { opacity: 0; } }
@@ -1675,11 +1665,11 @@ html[data-motion="reduced"] .journey-symbol {
 }
 
 html[data-motion="reduced"] .journey-panel.is-diving-out {
-  animation: view-leave 420ms ease both;
+  animation: view-leave 240ms ease both;
 }
 
 html[data-motion="reduced"] .journey-panel.is-arriving {
-  animation: view-enter 600ms var(--ease-out) both;
+  animation: view-enter 300ms var(--ease-out) both;
 }
 
 html[data-motion="off"] *,
@@ -1830,6 +1820,17 @@ html[data-motion="off"] .effect-layer {
 }
 
 @media (hover: none), (pointer: coarse) {
-  .story-card { transform: none !important; }
+  .ambient__gradient { animation: none; }
+  .story-card {
+    background: linear-gradient(145deg, rgba(255,255,255,.075), rgba(255,255,255,.018)), rgba(47, 23, 43, .86);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transform: none !important;
+  }
+  .depth-orbit--two,
+  .depth-orbit--three,
+  .depth-tunnel i:nth-child(n + 4) { display: none; }
+  .depth-world__stars--near { opacity: .14; }
+  .journey-panel { box-shadow: 0 24px 65px rgba(5, 2, 11, .42), inset 0 1px rgba(255,255,255,.08); }
   .magnetic { transform: scale(var(--press-scale, 1)); }
 }
