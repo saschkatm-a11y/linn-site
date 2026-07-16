@@ -1,265 +1,245 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-motion="full" data-time="afternoon">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Linn – ein kleiner Ort für große Ideen.">
-    <meta name="robots" content="noindex, nofollow, noarchive">
-    <meta name="theme-color" content="#080b10">
-    <title>Linn</title>
-    <style>
-      :root {
-        color-scheme: dark;
-        --ink: #f7f8f2;
-        --muted: #a8b0aa;
-        --line: rgba(255, 255, 255, 0.12);
-        --accent: #b7ff5a;
-        --accent-soft: rgba(183, 255, 90, 0.16);
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        min-width: 320px;
-        background: #080b10;
-      }
-
-      body {
-        min-height: 100svh;
-        margin: 0;
-        overflow-x: hidden;
-        color: var(--ink);
-        background:
-          radial-gradient(circle at 18% 14%, rgba(58, 83, 58, 0.44), transparent 34rem),
-          radial-gradient(circle at 88% 88%, rgba(43, 74, 96, 0.38), transparent 30rem),
-          #080b10;
-        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      }
-
-      body::before {
-        position: fixed;
-        inset: 0;
-        z-index: -1;
-        background-image: linear-gradient(var(--line) 1px, transparent 1px),
-          linear-gradient(90deg, var(--line) 1px, transparent 1px);
-        background-size: 72px 72px;
-        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), transparent 78%);
-        content: "";
-        opacity: 0.22;
-      }
-
-      .page {
-        display: grid;
-        min-height: 100svh;
-        width: min(1180px, calc(100% - 40px));
-        margin: 0 auto;
-        grid-template-rows: auto 1fr auto;
-      }
-
-      .site-header,
-      .site-footer {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        min-height: 92px;
-      }
-
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        color: var(--ink);
-        font-size: 0.82rem;
-        font-weight: 760;
-        letter-spacing: 0.18em;
-        text-decoration: none;
-      }
-
-      .brand-mark {
-        display: grid;
-        width: 38px;
-        height: 38px;
-        place-items: center;
-        border: 1px solid rgba(183, 255, 90, 0.46);
-        border-radius: 50%;
-        color: var(--accent);
-        background: var(--accent-soft);
-        letter-spacing: 0;
-      }
-
-      .status {
-        display: inline-flex;
-        align-items: center;
-        gap: 9px;
-        color: var(--muted);
-        font-size: 0.78rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .status::before {
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
-        background: var(--accent);
-        box-shadow: 0 0 18px var(--accent);
-        content: "";
-      }
-
-      .hero {
-        display: grid;
-        align-content: center;
-        min-height: 620px;
-        padding: 64px 0 88px;
-      }
-
-      .eyebrow {
-        margin: 0 0 22px;
-        color: var(--accent);
-        font-size: clamp(0.72rem, 1.3vw, 0.86rem);
-        font-weight: 700;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-      }
-
-      h1 {
-        max-width: 1080px;
-        margin: 0;
-        font-size: clamp(3.6rem, 8.5vw, 7.2rem);
-        font-weight: 650;
-        letter-spacing: -0.075em;
-        line-height: 0.9;
-      }
-
-      h1 span {
-        display: block;
-        color: transparent;
-        -webkit-text-stroke: 1px rgba(247, 248, 242, 0.48);
-      }
-
-      .intro {
-        max-width: 580px;
-        margin: 36px 0 0;
-        color: var(--muted);
-        font-size: clamp(1rem, 1.7vw, 1.24rem);
-        line-height: 1.7;
-      }
-
-      .facts {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 44px;
-      }
-
-      .facts span {
-        padding: 10px 15px;
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        color: #d6dcd7;
-        background: rgba(255, 255, 255, 0.035);
-        font-size: 0.78rem;
-        letter-spacing: 0.09em;
-        text-transform: uppercase;
-        backdrop-filter: blur(12px);
-      }
-
-      .site-footer {
-        min-height: 82px;
-        border-top: 1px solid var(--line);
-        color: #727b75;
-        font-size: 0.76rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      @media (max-width: 640px) {
-        .page {
-          width: min(1180px, calc(100% - 32px));
-        }
-
-        .site-header {
-          min-height: 78px;
-        }
-
-        .status {
-          font-size: 0;
-        }
-
-        .hero {
-          min-height: auto;
-          padding: 94px 0 110px;
-        }
-
-        h1 {
-          font-size: clamp(3rem, 13.5vw, 3.4rem);
-          letter-spacing: -0.045em;
-          line-height: 0.94;
-        }
-
-        .site-footer {
-          align-items: flex-start;
-          flex-direction: column;
-          justify-content: center;
-          gap: 7px;
-        }
-      }
-
-      @media (prefers-reduced-motion: no-preference) {
-        .hero > * {
-          animation: rise 700ms both;
-        }
-
-        .hero > :nth-child(2) {
-          animation-delay: 80ms;
-        }
-
-        .hero > :nth-child(3) {
-          animation-delay: 160ms;
-        }
-
-        .hero > :nth-child(4) {
-          animation-delay: 240ms;
-        }
-
-        @keyframes rise {
-          from {
-            transform: translateY(18px);
-            opacity: 0;
-          }
-        }
-      }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#241326" />
+    <meta
+      name="description"
+      content="Ein kleines digitales Geschenk voller Komplimente, Umarmungen und Überraschungen für Linn."
+    />
+    <title>Für dich, Linn ❤</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="page">
-      <header class="site-header">
-        <a class="brand" href="/" aria-label="Linn Startseite">
-          <span class="brand-mark" aria-hidden="true">L</span>
-          <span>Linn</span>
-        </a>
-        <span class="status">Online</span>
+    <a class="skip-link" href="#main-content">Direkt zum Geschenk</a>
+
+    <div class="ambient" aria-hidden="true">
+      <div class="ambient__gradient"></div>
+      <div class="ambient__blob ambient__blob--one" data-depth="0.35"></div>
+      <div class="ambient__blob ambient__blob--two" data-depth="0.2"></div>
+      <div class="ambient__blob ambient__blob--three" data-depth="0.12"></div>
+      <div class="ambient__stars"></div>
+      <div class="ambient__particles" id="ambientParticles"></div>
+      <div class="cursor-glow" id="cursorGlow"></div>
+      <div class="ambient__vignette"></div>
+    </div>
+
+    <div class="intro" id="intro" aria-hidden="true">
+      <div class="intro__halo"></div>
+      <div class="intro__heart">❤</div>
+      <p>Eine kleine Überraschung wird für Linn vorbereitet&nbsp;…</p>
+      <div class="intro__dots"><i></i><i></i><i></i></div>
+    </div>
+
+    <div class="app" id="app">
+      <header class="topbar">
+        <button class="brand secret-trigger" id="brandButton" type="button" aria-label="Für Linn">
+          <span class="brand__mark">L</span>
+          <span class="brand__text">Nur für Linn</span>
+        </button>
+
+        <div class="topbar__actions">
+          <span class="daylight" id="daylightLabel"><i></i> Rosé-Nachmittag</span>
+          <button class="icon-button" id="treasureButton" type="button" aria-label="Gefundene Herzen öffnen">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 9h16v11H4zM3 6h18v4H3zM12 6v14M12 6C9 6 7 4.8 7 3.3 7 2.2 7.9 2 8.7 2 10.6 2 12 6 12 6Zm0 0c3 0 5-1.2 5-2.7 0-1.1-.9-1.3-1.7-1.3C13.4 2 12 6 12 6Z" />
+            </svg>
+            <span class="icon-button__badge" id="treasureCount">0</span>
+          </button>
+          <button class="icon-button" id="settingsButton" type="button" aria-label="Einstellungen öffnen">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
+              <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.83 2.83-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V21h-4v-.08A1.7 1.7 0 0 0 8.94 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.83-2.83.06-.06A1.7 1.7 0 0 0 4.57 15 1.7 1.7 0 0 0 3 14H3v-4h.08A1.7 1.7 0 0 0 4.6 8.94a1.7 1.7 0 0 0-.34-1.88L4.2 7l2.83-2.83.06.06A1.7 1.7 0 0 0 9 4.57 1.7 1.7 0 0 0 10 3V3h4v.08a1.7 1.7 0 0 0 1.06 1.52 1.7 1.7 0 0 0 1.88-.34L17 4.2 19.83 7l-.06.06a1.7 1.7 0 0 0-.34 1.88A1.7 1.7 0 0 0 21 10h.08v4H21a1.7 1.7 0 0 0-1.6 1Z" />
+            </svg>
+          </button>
+        </div>
       </header>
 
-      <main class="hero">
-        <p class="eyebrow">linn.saschaskaskaden.de</p>
-        <h1>Ein kleiner Ort <span>für große Ideen.</span></h1>
-        <p class="intro">
-          Schön, dass du da bist. Diese Seite ist bereit – und wird Schritt für Schritt mit Leben gefüllt.
-        </p>
-        <div class="facts" aria-label="Eigenschaften">
-          <span>Schlicht</span>
-          <span>Schnell</span>
-          <span>Persönlich</span>
-        </div>
+      <main id="main-content" class="main-content">
+        <section class="view view--start is-active" id="startView" aria-labelledby="startTitle">
+          <div class="story-card start-card tilt-card" id="startCard">
+            <div class="card-shine"></div>
+            <button class="hero-heart" id="mainHeart" type="button" aria-label="Leuchtendes Herz">
+              <span class="hero-heart__rings"></span>
+              <span>❤</span>
+            </button>
+            <p class="eyebrow intro-step intro-step--one">Eine kleine Überraschung für einen besonderen Menschen</p>
+            <h1 id="startTitle" class="intro-step intro-step--two">
+              Für dich, <em>Linn</em> <span aria-hidden="true">❤</span>
+            </h1>
+            <p class="lead intro-step intro-step--three">
+              Hier warten 200 kleine Gründe, warum du mein Leben heller, wärmer und sehr viel schöner machst.
+            </p>
+            <div class="gift-wrap intro-step intro-step--four">
+              <button class="primary-button magnetic" id="openGiftButton" type="button">
+                <span class="button-glow"></span>
+                <span class="gift-icon" aria-hidden="true">
+                  <i class="gift-icon__lid"></i><i class="gift-icon__box"></i><i class="gift-icon__ribbon"></i>
+                </span>
+                <span>Geschenk öffnen</span>
+                <span aria-hidden="true">♡</span>
+              </button>
+              <p class="microcopy">Für einen kleinen magischen Moment antippen</p>
+            </div>
+            <div class="start-card__number" aria-hidden="true">200</div>
+          </div>
+
+          <p class="tiny-promise"><span>✦</span> Mit Liebe gemacht · nur auf diesem Gerät gespeichert</p>
+        </section>
+
+        <section class="view view--compliment" id="complimentView" aria-labelledby="complimentText" hidden>
+          <div class="journey-heading">
+            <div>
+              <p class="eyebrow">Deine kleine Herzensreise</p>
+              <h2>Ein Grund mehr, zu lächeln</h2>
+            </div>
+            <button class="text-button" id="backButton" type="button">Zum Anfang</button>
+          </div>
+
+          <div class="mood-row" aria-label="Komplimente nach Stimmung auswählen">
+            <span>Heute brauche ich&nbsp;…</span>
+            <button class="mood-chip is-active" type="button" data-mood="all">eine Überraschung</button>
+            <button class="mood-chip" type="button" data-mood="warmth">Wärme</button>
+            <button class="mood-chip" type="button" data-mood="smile">ein Lächeln</button>
+            <button class="mood-chip" type="button" data-mood="courage">Mut</button>
+          </div>
+
+          <article class="story-card compliment-card tilt-card" id="complimentCard">
+            <div class="card-shine"></div>
+            <div class="compliment-card__wash"></div>
+            <div class="compliment-card__topline">
+              <span class="rarity-badge" id="rarityBadge"><i></i><span>Nur für dich, Linn</span></span>
+              <button class="copy-button" id="copyButton" type="button" aria-label="Kompliment kopieren">
+                <svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M8 8h11v11H8zM5 16H4V5h11v1" />
+                </svg>
+                <svg class="check-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4 10-10" /></svg>
+                <span>Kopieren</span>
+              </button>
+            </div>
+
+            <div class="compliment-card__content">
+              <span class="quote-mark" aria-hidden="true">“</span>
+              <p id="complimentText" aria-live="polite">Dein warmes Lächeln macht selbst gewöhnliche Momente besonders.</p>
+              <span class="compliment-heart" aria-hidden="true">♡</span>
+            </div>
+
+            <div class="compliment-card__footer">
+              <div class="progress-copy">
+                <span><strong id="progressCurrent">1</strong> von <span id="progressTotal">200</span> entdeckt</span>
+                <span id="progressPercent">0%</span>
+              </div>
+              <div class="progress-track" role="progressbar" aria-label="Entdeckte Komplimente" aria-valuemin="0" aria-valuemax="200" aria-valuenow="1">
+                <div class="progress-track__fill" id="progressFill"></div>
+                <i class="progress-track__heart" id="progressHeart">❤</i>
+              </div>
+            </div>
+          </article>
+
+          <div class="action-row">
+            <button class="primary-button magnetic" id="nextButton" type="button">
+              <span class="button-glow"></span>
+              <span>Nächstes Kompliment</span>
+              <span aria-hidden="true">❤</span>
+            </button>
+            <button class="secondary-button magnetic" id="hugButton" type="button">
+              <span aria-hidden="true">♡</span>
+              <span>Kuschelumarmung senden</span>
+            </button>
+          </div>
+
+          <p class="keyboard-hint"><kbd>Leertaste</kbd> für das nächste Kompliment</p>
+        </section>
+
+        <section class="view view--final" id="finalView" aria-labelledby="finalTitle" hidden>
+          <article class="story-card final-card">
+            <div class="final-heart" aria-hidden="true">❤</div>
+            <p class="eyebrow">Alle 200 Herzensgründe entdeckt</p>
+            <h2 id="finalTitle">Und das Schönste fehlt noch&nbsp;…</h2>
+            <div class="final-copy">
+              <p>All diese Worte sind nur kleine Versuche zu beschreiben, wie besonders du für mich bist.</p>
+              <p>Die erste echte Umarmung kann keine Animation ersetzen – aber zwei Herzen können schon einmal üben.</p>
+              <div class="meeting-hearts" aria-hidden="true"><i>❤</i><span>✦</span><i>❤</i></div>
+              <p>Auf unser erstes Treffen, gemeinsames Kuscheln und noch unendlich viele Gründe zu lächeln.</p>
+            </div>
+            <p class="love-line">Ich liebe dich, Linn <span aria-hidden="true">❤</span></p>
+            <div class="action-row action-row--centered">
+              <button class="primary-button" id="finalHugButton" type="button">Eine große Umarmung senden</button>
+              <button class="text-button" id="restartButton" type="button">Die Reise noch einmal ansehen</button>
+            </div>
+          </article>
+        </section>
       </main>
 
-      <footer class="site-footer">
-        <span>© 2026 Linn</span>
-        <span>Mit Ruhe gestaltet</span>
-      </footer>
+      <button class="secret-heart secret-heart--corner" id="cornerSecret" type="button" aria-label="Ein sehr kleines Herz">♥</button>
+      <button class="secret-star" id="starSecret" type="button" aria-label="Ein leiser Stern">✦</button>
+      <button class="night-moon" id="nightSecret" type="button" aria-label="Mondschein-Geheimnis">☾</button>
     </div>
+
+    <div class="hug-effect" id="hugEffect" aria-hidden="true">
+      <i class="hug-effect__left">❤</i>
+      <i class="hug-effect__right">❤</i>
+      <div class="hug-effect__joined">❤</div>
+      <div class="hug-effect__wave"></div>
+    </div>
+
+    <div class="milestone" id="milestone" role="status" aria-live="polite" hidden>
+      <div class="milestone__rays"></div>
+      <div class="milestone__medal"><span>❤</span><strong id="milestoneNumber">25</strong></div>
+      <p class="eyebrow">Herzensmeilenstein</p>
+      <h2 id="milestoneTitle">25 kleine Gründe entdeckt</h2>
+      <p id="milestoneCopy">Und jeder einzelne gehört nur dir.</p>
+    </div>
+
+    <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+    <div class="effect-layer" id="effectLayer" aria-hidden="true"></div>
+
+    <dialog class="modal" id="treasureModal" aria-labelledby="treasureTitle">
+      <div class="modal__head">
+        <div>
+          <p class="eyebrow">Unsere kleinen Schätze</p>
+          <h2 id="treasureTitle">Gefundene Herzen</h2>
+        </div>
+        <button class="modal__close" type="button" data-close-modal aria-label="Schließen">×</button>
+      </div>
+      <p class="modal__lead">Jede Entdeckung bleibt nur auf diesem Gerät für dich aufgehoben.</p>
+      <div class="treasure-grid" id="treasureGrid"></div>
+    </dialog>
+
+    <dialog class="modal modal--settings" id="settingsModal" aria-labelledby="settingsTitle">
+      <div class="modal__head">
+        <div>
+          <p class="eyebrow">So fühlt es sich gut an</p>
+          <h2 id="settingsTitle">Einstellungen</h2>
+        </div>
+        <button class="modal__close" type="button" data-close-modal aria-label="Schließen">×</button>
+      </div>
+
+      <fieldset class="setting-group">
+        <legend>Bewegungen &amp; Effekte</legend>
+        <div class="segmented" id="motionSetting">
+          <button type="button" data-motion-value="full">Magisch</button>
+          <button type="button" data-motion-value="reduced">Sanft</button>
+          <button type="button" data-motion-value="off">Ruhig</button>
+        </div>
+        <p>Bei aktivierter Bewegungsreduktion wird automatisch mindestens „Sanft“ verwendet.</p>
+      </fieldset>
+
+      <fieldset class="setting-group">
+        <legend>Klang</legend>
+        <div class="segmented" id="soundSetting">
+          <button type="button" data-sound-value="mute">Lautlos</button>
+          <button type="button" data-sound-value="effects">Effekte</button>
+          <button type="button" data-sound-value="music">Musik &amp; Effekte</button>
+        </div>
+        <p>Die Seite startet immer lautlos. Klänge werden nur nach deiner bewussten Auswahl abgespielt.</p>
+      </fieldset>
+
+      <button class="secondary-button modal__reset" id="resetProgressButton" type="button">Lokalen Fortschritt zurücksetzen</button>
+    </dialog>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>

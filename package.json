@@ -1,0 +1,13 @@
+{
+  "name": "fuer-linn",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ein interaktives romantisches Geschenk für Linn",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "check": "node --check data.js && node --check app.js && node scripts/smoke-test.mjs"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}
