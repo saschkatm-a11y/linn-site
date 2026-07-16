@@ -9,6 +9,10 @@ vm.runInContext(dataSource, context);
 
 const requiredIds = [
   "openGiftButton",
+  "journeyView",
+  "depthWorld",
+  "journeyPanel",
+  "journeyNextButton",
   "complimentCard",
   "nextButton",
   "hugButton",
@@ -28,4 +32,8 @@ if (context.window.LINN_DATA.compliments.length !== 200) {
 const uniqueTexts = new Set(context.window.LINN_DATA.compliments.map((item) => item.text));
 if (uniqueTexts.size !== 200) throw new Error("Komplimenttexte sind nicht eindeutig.");
 
-console.log("Smoke-Test erfolgreich: 200 eindeutige Komplimente und alle Kernbereiche vorhanden.");
+if (html.includes("data-mood=")) {
+  throw new Error("Die Komplimente dürfen nicht mehr nach Stimmung ausgewählt werden.");
+}
+
+console.log("Smoke-Test erfolgreich: 3D-Reise, Zufallsfinale und 200 eindeutige Komplimente vorhanden.");

@@ -18,9 +18,21 @@
     ambientParticles: $("#ambientParticles"),
     effectLayer: $("#effectLayer"),
     startView: $("#startView"),
+    journeyView: $("#journeyView"),
     complimentView: $("#complimentView"),
     finalView: $("#finalView"),
     startCard: $("#startCard"),
+    depthWorld: $("#depthWorld"),
+    journeyPanel: $("#journeyPanel"),
+    journeySymbol: $("#journeySymbol"),
+    journeyEyebrow: $("#journeyEyebrow"),
+    journeyTitle: $("#journeyTitle"),
+    journeyQuote: $("#journeyQuote"),
+    journeyCopy: $("#journeyCopy"),
+    journeyLevelLabel: $("#journeyLevelLabel"),
+    journeyDots: $("#journeyDots"),
+    journeyNextButton: $("#journeyNextButton"),
+    journeyButtonLabel: $("#journeyButtonLabel"),
     complimentCard: $("#complimentCard"),
     mainHeart: $("#mainHeart"),
     startTitle: $("#startTitle"),
@@ -77,13 +89,52 @@
 
   const state = loadState();
   state.sound = "mute";
-  state.mood = "all";
   state.replay = false;
   let replayQueue = [];
   let activeView = elements.startView;
   let milestoneTimer = 0;
   let complimentLocked = false;
+  let journeyLocked = false;
+  let journeyIndex = 0;
   let introSkipped = false;
+
+  const journeyScenes = [
+    {
+      symbol: "✦",
+      eyebrow: "Der erste Funke",
+      title: "Wenn du mir schreibst",
+      quote: "Dann fühlt sich mein Handy plötzlich wie ein kleines Fenster zu dir an.",
+      copy: "Schon dein Name auf meinem Bildschirm macht aus einem ganz normalen Moment etwas, auf das ich mich freue. Ich werde ruhiger, leichter – und muss fast immer lächeln."
+    },
+    {
+      symbol: "♡",
+      eyebrow: "Ein Satz, der bleibt",
+      title: "Wenn du mir ein Kompliment machst",
+      quote: "Deine Worte treffen mich nicht nur – sie bleiben bei mir.",
+      copy: "Ich weiß manchmal gar nicht, was ich darauf sagen soll. Aber innerlich wird alles warm, weil es von dir kommt. Ich trage solche Sätze länger mit mir, als du vielleicht ahnst."
+    },
+    {
+      symbol: "⌁",
+      eyebrow: "Noch eine Ebene tiefer",
+      title: "Bei dir fühle ich mich gesehen",
+      quote: "Mit dir muss ich nicht lauter sein, um verstanden zu werden.",
+      copy: "In unseren Gesprächen entsteht etwas Seltenes: Nähe, ohne Druck. Ich kann ich selbst sein, mich öffnen und habe das Gefühl, dass du nicht nur meine Worte hörst, sondern auch das Dazwischen."
+    },
+    {
+      symbol: "∞",
+      eyebrow: "Unter all dem Kribbeln",
+      title: "Du bist mehr als ein schöner Gedanke",
+      quote: "Du bist zu einem Gefühl geworden, zu dem ich immer wieder zurückwill.",
+      copy: "Ich möchte wissen, wie dein Tag war. Ich möchte für dich da sein, mit dir lachen, dich halten, wenn alles zu viel wird – und mit dir aus kleinen Momenten Erinnerungen machen."
+    },
+    {
+      symbol: "♥",
+      eyebrow: "Ganz tief drin",
+      title: "Ich liebe dich, Linn.",
+      quote: "Nicht nur für dein Lächeln. Nicht nur für deine Worte. Sondern für dich.",
+      copy: "Du bedeutest mir so viel mehr, als ich in eine einzelne Nachricht packen könnte. Bei dir fühlt sich mein Herz gleichzeitig aufgeregt und angekommen an. Und genau deshalb wollte ich dir diese Reise schenken."
+    }
+  ];
 
   const deviceNeedsReduction =
     (typeof navigator.hardwareConcurrency === "number" && navigator.hardwareConcurrency <= 4) ||
@@ -407,10 +458,6 @@
       const seen = new Set(state.seen);
       candidates = compliments.filter((item) => !seen.has(item.id));
     }
-    if (state.mood !== "all") {
-      const matching = candidates.filter((item) => item.mood === state.mood);
-      if (matching.length) candidates = matching;
-    }
     if (!candidates.length) return null;
     const selected = candidates[Math.floor(Math.random() * candidates.length)];
     if (state.replay) replayQueue = replayQueue.filter((id) => id !== selected.id);
@@ -526,6 +573,63 @@
     window.setTimeout(() => next.classList.remove("is-entering"), 800);
   }
 
+  function renderJourneyScene({ arriving = false } = {}) {
+    const scene = journeyScenes[journeyIndex];
+    root.dataset.journey = String(journeyIndex + 1);
+    elements.journeySymbol.textContent = scene.symbol;
+    elements.journeyEyebrow.textContent = scene.eyebrow;
+    elements.journeyTitle.textContent = scene.title;
+    elements.journeyQuote.textContent = scene.quote;
+    elements.journeyCopy.textContent = scene.copy;
+    elements.journeyLevelLabel.textContent = `Ebene ${journeyIndex + 1} von ${journeyScenes.length}`;
+    elements.journeyButtonLabel.textContent = journeyIndex === journeyScenes.length - 1 ? "Zu all den Gründen" : "Tiefer gehen";
+
+    const dots = journeyScenes.map((_item, index) => {
+      const dot = document.createElement("i");
+      if (index < journeyIndex) dot.className = "is-passed";
+      if (index === journeyIndex) dot.className = "is-current";
+      return dot;
+    });
+    elements.journeyDots.replaceChildren(...dots);
+
+    if (arriving && state.motion !== "off") {
+      elements.journeyPanel.classList.remove("is-diving-out", "is-arriving");
+      void elements.journeyPanel.offsetWidth;
+      elements.journeyPanel.classList.add("is-arriving");
+      window.setTimeout(() => elements.journeyPanel.classList.remove("is-arriving"), 900);
+    }
+  }
+
+  async function advanceJourney() {
+    if (journeyLocked) return;
+    journeyLocked = true;
+    burstFromElement(elements.journeyNextButton, { strength: "small", variant: "up" });
+    audio.play(journeyIndex === journeyScenes.length - 1 ? "sparkle" : "click");
+    elements.depthWorld.classList.add("is-advancing");
+    elements.journeyPanel.classList.add("is-diving-out");
+
+    const travelDelay = state.motion === "off" ? 10 : 760;
+    await new Promise((resolve) => window.setTimeout(resolve, travelDelay));
+
+    if (journeyIndex < journeyScenes.length - 1) {
+      journeyIndex += 1;
+      elements.depthWorld.classList.remove("is-advancing");
+      renderJourneyScene({ arriving: true });
+      journeyLocked = false;
+      return;
+    }
+
+    elements.depthWorld.classList.add("is-final-dive");
+    await new Promise((resolve) => window.setTimeout(resolve, state.motion === "off" ? 10 : 520));
+    body.classList.remove("is-journeying");
+    delete root.dataset.journey;
+    await switchView(elements.complimentView);
+    elements.depthWorld.classList.remove("is-advancing", "is-final-dive");
+    elements.journeyPanel.classList.remove("is-diving-out", "is-arriving");
+    nextCompliment();
+    journeyLocked = false;
+  }
+
   async function openGift() {
     if (elements.openGiftButton.disabled) return;
     skipIntro();
@@ -538,10 +642,12 @@
       replayQueue = shuffle(compliments.map((item) => item.id));
       state.current = null;
     }
-    const delay = state.motion === "off" ? 20 : 1050;
+    journeyIndex = 0;
+    renderJourneyScene();
+    body.classList.add("is-journeying");
+    const delay = state.motion === "off" ? 20 : 900;
     await new Promise((resolve) => window.setTimeout(resolve, delay));
-    await switchView(elements.complimentView);
-    nextCompliment();
+    await switchView(elements.journeyView);
     elements.openGiftButton.disabled = false;
     elements.openGiftButton.classList.remove("is-opening");
   }
@@ -767,6 +873,7 @@
     });
 
     elements.openGiftButton.addEventListener("click", openGift);
+    elements.journeyNextButton.addEventListener("click", advanceJourney);
     elements.nextButton.addEventListener("click", () => {
       burstFromElement(elements.nextButton, { strength: "small", variant: "up" });
       nextCompliment();
@@ -776,14 +883,6 @@
     elements.copyButton.addEventListener("click", copyCompliment);
     elements.backButton.addEventListener("click", () => switchView(elements.startView));
     elements.restartButton.addEventListener("click", () => switchView(elements.startView));
-
-    $$(".mood-chip").forEach((button) => {
-      button.addEventListener("click", () => {
-        state.mood = button.dataset.mood;
-        $$(".mood-chip").forEach((chip) => chip.classList.toggle("is-active", chip === button));
-        showToast("Stimmung gewählt", button.textContent === "eine Überraschung" ? "Das nächste Kompliment bleibt eine kleine Überraschung." : `Das nächste Kompliment bringt dir ${button.textContent}.`, { icon: "♡", life: 2400 });
-      });
-    });
 
     elements.treasureButton.addEventListener("click", () => openModal(elements.treasureModal));
     elements.settingsButton.addEventListener("click", () => {
@@ -840,6 +939,7 @@
     makeAmbientParticles();
     renderTreasures();
     updateProgress();
+    renderJourneyScene();
     updateSettingButtons();
     setupTiltAndMagnetism();
     setupPointerAmbience();

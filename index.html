@@ -6,10 +6,10 @@
     <meta name="theme-color" content="#241326" />
     <meta
       name="description"
-      content="Ein kleines digitales Geschenk voller Komplimente, Umarmungen und Überraschungen für Linn."
+      content="Eine kleine Reise durch Gefühle, Liebe und 200 zufällige Komplimente für Linn."
     />
     <title>Für dich, Linn ❤</title>
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=journey-2" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Direkt zum Geschenk</a>
@@ -69,7 +69,8 @@
               Für dich, <em>Linn</em> <span aria-hidden="true">❤</span>
             </h1>
             <p class="lead intro-step intro-step--three">
-              Hier warten 200 kleine Gründe, warum du mein Leben heller, wärmer und sehr viel schöner machst.
+              Hinter diesem Geschenk wartet eine kleine Reise: erst ein Gedanke, dann ein Gefühl – und dann alles,
+              was ich dir schon lange sagen möchte.
             </p>
             <div class="gift-wrap intro-step intro-step--four">
               <button class="primary-button magnetic" id="openGiftButton" type="button">
@@ -88,22 +89,53 @@
           <p class="tiny-promise"><span>✦</span> Mit Liebe gemacht · nur auf diesem Gerät gespeichert</p>
         </section>
 
+        <section class="view view--journey" id="journeyView" aria-labelledby="journeyTitle" hidden>
+          <div class="depth-world" id="depthWorld" aria-live="polite">
+            <div class="depth-world__sky" aria-hidden="true"></div>
+            <div class="depth-world__stars depth-world__stars--far" aria-hidden="true"></div>
+            <div class="depth-world__stars depth-world__stars--near" aria-hidden="true"></div>
+            <div class="depth-tunnel" aria-hidden="true">
+              <i style="--ring: 0"></i><i style="--ring: 1"></i><i style="--ring: 2"></i>
+              <i style="--ring: 3"></i><i style="--ring: 4"></i><i style="--ring: 5"></i>
+            </div>
+            <div class="depth-orbit depth-orbit--one" aria-hidden="true"><i>♡</i></div>
+            <div class="depth-orbit depth-orbit--two" aria-hidden="true"><i>✦</i></div>
+            <div class="depth-orbit depth-orbit--three" aria-hidden="true"><i>♥</i></div>
+
+            <div class="journey-progress" aria-label="Fortschritt der Liebesreise">
+              <span id="journeyLevelLabel">Ebene 1 von 5</span>
+              <div class="journey-progress__dots" id="journeyDots" aria-hidden="true"></div>
+            </div>
+
+            <article class="journey-panel" id="journeyPanel">
+              <div class="journey-panel__aura" aria-hidden="true"></div>
+              <span class="journey-symbol" id="journeySymbol" aria-hidden="true">✦</span>
+              <p class="eyebrow" id="journeyEyebrow">Der erste Funke</p>
+              <h2 id="journeyTitle">Wenn du mir schreibst</h2>
+              <p class="journey-quote" id="journeyQuote"></p>
+              <p class="journey-copy" id="journeyCopy"></p>
+              <button class="primary-button journey-next magnetic" id="journeyNextButton" type="button">
+                <span class="button-glow"></span>
+                <span id="journeyButtonLabel">Tiefer gehen</span>
+                <span aria-hidden="true">→</span>
+              </button>
+              <p class="journey-hint">Antippen, um weiter nach vorn zu reisen</p>
+            </article>
+
+            <p class="journey-depth-label" aria-hidden="true"><span>Du bist hier</span><i></i><span>Tiefer</span></p>
+          </div>
+        </section>
+
         <section class="view view--compliment" id="complimentView" aria-labelledby="complimentText" hidden>
           <div class="journey-heading">
             <div>
-              <p class="eyebrow">Deine kleine Herzensreise</p>
-              <h2>Ein Grund mehr, zu lächeln</h2>
+              <p class="eyebrow">Am tiefsten Punkt angekommen</p>
+              <h2>Jetzt entscheidet nur noch das Herz</h2>
             </div>
             <button class="text-button" id="backButton" type="button">Zum Anfang</button>
           </div>
 
-          <div class="mood-row" aria-label="Komplimente nach Stimmung auswählen">
-            <span>Heute brauche ich&nbsp;…</span>
-            <button class="mood-chip is-active" type="button" data-mood="all">eine Überraschung</button>
-            <button class="mood-chip" type="button" data-mood="warmth">Wärme</button>
-            <button class="mood-chip" type="button" data-mood="smile">ein Lächeln</button>
-            <button class="mood-chip" type="button" data-mood="courage">Mut</button>
-          </div>
+          <p class="random-promise"><span aria-hidden="true">✦</span> Kein Auswählen, kein Plan – jedes Antippen findet zufällig genau einen neuen Herzensgrund.</p>
 
           <article class="story-card compliment-card tilt-card" id="complimentCard">
             <div class="card-shine"></div>
@@ -239,7 +271,7 @@
       <button class="secondary-button modal__reset" id="resetProgressButton" type="button">Lokalen Fortschritt zurücksetzen</button>
     </dialog>
 
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+    <script src="data.js?v=journey-2"></script>
+    <script src="app.js?v=journey-2"></script>
   </body>
 </html>
