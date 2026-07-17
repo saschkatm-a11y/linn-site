@@ -860,7 +860,7 @@ html[data-journey="5"] .depth-world {
     radial-gradient(circle at 50% 50%, var(--scene-glow), transparent 24%),
     radial-gradient(circle at 22% 28%, color-mix(in srgb, var(--scene-a) 42%, transparent), transparent 25%),
     radial-gradient(circle at 80% 72%, color-mix(in srgb, var(--scene-a) 26%, transparent), transparent 26%);
-  transform: translateZ(-500px) scale(1.6);
+  transform: translate3d(0, 0, 0) scale(1.06);
 }
 
 .depth-world::before,
@@ -882,11 +882,14 @@ html[data-journey="5"] .depth-world {
 }
 
 .depth-world::after {
-  width: min(32vw, 340px);
-  aspect-ratio: 1;
-  background: radial-gradient(circle, rgba(255,255,255,.1), var(--scene-glow) 18%, transparent 68%);
-  opacity: .44;
-  will-change: transform, opacity;
+  inset: -12%;
+  width: auto;
+  aspect-ratio: auto;
+  border-radius: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255,255,255,.14), var(--scene-glow) 24%, transparent 64%);
+  opacity: .38;
+  transform: translate3d(0, 0, 0);
+  will-change: opacity;
 }
 
 .depth-world__stars {
@@ -903,7 +906,7 @@ html[data-journey="5"] .depth-world {
   background-image: radial-gradient(circle, rgba(255,255,255,.82) 0 1px, transparent 1.4px);
   background-position: 7px 11px;
   background-size: 62px 62px;
-  transform: translateZ(-360px) scale(1.42) rotate(7deg);
+  transform: translate3d(0, 0, 0) scale(1.04) rotate(7deg);
 }
 
 .depth-world__stars--near {
@@ -914,7 +917,7 @@ html[data-journey="5"] .depth-world {
     radial-gradient(circle, rgba(255,255,255,.55) 0 1.5px, transparent 2px);
   background-position: 10% 20%, 60% 70%;
   background-size: 118px 118px, 173px 173px;
-  transform: translateZ(-80px) scale(1.1) rotate(-5deg);
+  transform: translate3d(0, 0, 0) scale(1.02) rotate(-5deg);
 }
 
 .depth-tunnel {
@@ -1016,8 +1019,7 @@ html[data-journey="5"] .depth-world {
   background: linear-gradient(145deg, rgba(255,255,255,.09), rgba(255,255,255,.025)), rgba(29, 13, 32, .82);
   box-shadow: 0 38px 100px rgba(5, 2, 11, .48), inset 0 1px rgba(255,255,255,.08), 0 0 70px color-mix(in srgb, var(--scene-a) 11%, transparent);
   text-align: center;
-  transform: translateZ(80px);
-  transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   will-change: transform, opacity;
 }
@@ -1602,76 +1604,76 @@ html[data-time="night"] .night-moon { display: block; animation: moon-float 6s e
 @keyframes view-leave { to { opacity: 0; transform: translateY(-10px) scale(.99); } }
 @keyframes journey-view-enter { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: scale(1); } }
 @keyframes journey-panel-travel {
-  0% { opacity: 1; transform: translateZ(80px) scale(1); animation-timing-function: cubic-bezier(.42, 0, .76, .38); }
-  30% { opacity: 1; transform: translateZ(120px) scale(1.02); }
-  40% { opacity: .82; transform: translateZ(360px) scale(1.2); }
-  44% { opacity: 0; transform: translateZ(760px) scale(1.75); animation-timing-function: steps(1, end); }
-  45% { opacity: 0; transform: translateZ(-620px) scale(.68); }
-  52% { opacity: 0; transform: translateZ(-620px) scale(.68); animation-timing-function: cubic-bezier(.25, .55, .25, 1); }
-  70% { opacity: .38; transform: translateZ(-270px) scale(.83); }
-  88% { opacity: 1; transform: translateZ(98px) scale(1.01); animation-timing-function: ease-out; }
-  100% { opacity: 1; transform: translateZ(80px) scale(1); }
+  0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); animation-timing-function: cubic-bezier(.42, 0, .76, .38); }
+  30% { opacity: 1; transform: translate3d(0, -2px, 0) scale(1.008); }
+  40% { opacity: .78; transform: translate3d(0, -5px, 0) scale(1.045); }
+  44% { opacity: 0; transform: translate3d(0, -8px, 0) scale(1.09); animation-timing-function: steps(1, end); }
+  45% { opacity: 0; transform: translate3d(0, 8px, 0) scale(.94); }
+  52% { opacity: 0; transform: translate3d(0, 8px, 0) scale(.94); animation-timing-function: cubic-bezier(.25, .55, .25, 1); }
+  70% { opacity: .38; transform: translate3d(0, 4px, 0) scale(.965); }
+  88% { opacity: 1; transform: translate3d(0, -1px, 0) scale(1.004); animation-timing-function: ease-out; }
+  100% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 @keyframes journey-panel-travel-reduced {
-  0% { opacity: 1; transform: translateZ(80px); }
-  46% { opacity: 0; transform: translateY(-12px) translateZ(80px) scale(.99); }
-  54% { opacity: 0; transform: translateY(12px) translateZ(80px) scale(.99); }
-  100% { opacity: 1; transform: translateZ(80px); }
+  0% { opacity: 1; transform: translate3d(0, 0, 0); }
+  46% { opacity: 0; transform: translate3d(0, -8px, 0) scale(.99); }
+  54% { opacity: 0; transform: translate3d(0, 8px, 0) scale(.99); }
+  100% { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 @keyframes journey-panel-final {
-  0% { opacity: 1; transform: translateZ(80px) scale(1); }
-  28% { opacity: 1; transform: translateZ(112px) scale(1.015); }
-  72% { opacity: .92; transform: translateZ(340px) scale(1.2); }
-  100% { opacity: 0; transform: translateZ(820px) scale(1.82); }
+  0% { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  28% { opacity: 1; transform: translate3d(0, -2px, 0) scale(1.006); }
+  72% { opacity: .88; transform: translate3d(0, -5px, 0) scale(1.05); }
+  100% { opacity: 0; transform: translate3d(0, -9px, 0) scale(1.1); }
 }
 @keyframes journey-panel-final-reduced {
-  from { opacity: 1; transform: translateZ(80px); }
-  to { opacity: 0; transform: translateY(-14px) translateZ(80px) scale(.99); }
+  from { opacity: 1; transform: translate3d(0, 0, 0); }
+  to { opacity: 0; transform: translate3d(0, -10px, 0) scale(.99); }
 }
 @keyframes journey-passage-glow {
-  0%, 100% { opacity: .44; transform: translate(-50%, -50%) scale(1); }
-  46% { opacity: .96; transform: translate(-50%, -50%) scale(3.8); }
-  54% { opacity: .92; transform: translate(-50%, -50%) scale(4); }
+  0%, 100% { opacity: .38; }
+  46% { opacity: .96; }
+  54% { opacity: .92; }
 }
 @keyframes journey-stars-travel-far {
-  0% { opacity: .42; transform: translateZ(-360px) scale(1.42) rotate(7deg); }
-  42% { opacity: .08; transform: translateZ(420px) scale(2.8) rotate(9deg); }
-  44% { opacity: 0; transform: translateZ(520px) scale(3) rotate(9deg); animation-timing-function: steps(1, end); }
-  45% { opacity: 0; transform: translateZ(-760px) scale(1.05) rotate(5deg); }
-  54% { opacity: 0; transform: translateZ(-760px) scale(1.05) rotate(5deg); }
-  72% { opacity: .16; transform: translateZ(-560px) scale(1.18) rotate(6deg); }
-  100% { opacity: .42; transform: translateZ(-360px) scale(1.42) rotate(7deg); }
+  0% { opacity: .42; transform: translate3d(0, 0, 0) scale(1.04) rotate(7deg); }
+  42% { opacity: .08; transform: translate3d(0, 0, 0) scale(1.17) rotate(8deg); }
+  44% { opacity: 0; transform: translate3d(0, 0, 0) scale(1.2) rotate(8deg); animation-timing-function: steps(1, end); }
+  45% { opacity: 0; transform: translate3d(0, 0, 0) scale(.94) rotate(6deg); }
+  54% { opacity: 0; transform: translate3d(0, 0, 0) scale(.94) rotate(6deg); }
+  72% { opacity: .16; transform: translate3d(0, 0, 0) scale(.98) rotate(6.4deg); }
+  100% { opacity: .42; transform: translate3d(0, 0, 0) scale(1.04) rotate(7deg); }
 }
 @keyframes journey-stars-travel-near {
-  0% { opacity: var(--near-star-opacity); transform: translateZ(-80px) scale(1.1) rotate(-5deg); }
-  42% { opacity: 0; transform: translateZ(520px) scale(3) rotate(-8deg); }
-  44% { opacity: 0; transform: translateZ(620px) scale(3.2) rotate(-8deg); animation-timing-function: steps(1, end); }
-  45% { opacity: 0; transform: translateZ(-480px) scale(.9) rotate(-3deg); }
-  56% { opacity: 0; transform: translateZ(-480px) scale(.9) rotate(-3deg); }
-  76% { opacity: .1; transform: translateZ(-260px) scale(1) rotate(-4deg); }
-  100% { opacity: var(--near-star-opacity); transform: translateZ(-80px) scale(1.1) rotate(-5deg); }
+  0% { opacity: var(--near-star-opacity); transform: translate3d(0, 0, 0) scale(1.02) rotate(-5deg); }
+  42% { opacity: 0; transform: translate3d(0, 0, 0) scale(1.14) rotate(-6deg); }
+  44% { opacity: 0; transform: translate3d(0, 0, 0) scale(1.17) rotate(-6deg); animation-timing-function: steps(1, end); }
+  45% { opacity: 0; transform: translate3d(0, 0, 0) scale(.95) rotate(-4deg); }
+  56% { opacity: 0; transform: translate3d(0, 0, 0) scale(.95) rotate(-4deg); }
+  76% { opacity: .1; transform: translate3d(0, 0, 0) scale(.98) rotate(-4.5deg); }
+  100% { opacity: var(--near-star-opacity); transform: translate3d(0, 0, 0) scale(1.02) rotate(-5deg); }
 }
 @keyframes journey-tunnel-travel {
   0% { opacity: 1; transform: none; }
-  42% { opacity: 0; transform: translateZ(520px) scale(2.8); }
-  44% { opacity: 0; transform: translateZ(620px) scale(3); animation-timing-function: steps(1, end); }
-  45% { opacity: 0; transform: translateZ(-520px) scale(.66); }
-  54% { opacity: 0; transform: translateZ(-520px) scale(.66); }
+  42% { opacity: 0; transform: translate3d(0, 0, 0) scale(1.14); }
+  44% { opacity: 0; transform: translate3d(0, 0, 0) scale(1.18); animation-timing-function: steps(1, end); }
+  45% { opacity: 0; transform: translate3d(0, 0, 0) scale(.94); }
+  54% { opacity: 0; transform: translate3d(0, 0, 0) scale(.94); }
   100% { opacity: 1; transform: none; }
 }
 @keyframes journey-stars-final-far {
-  from { opacity: .42; transform: translateZ(-360px) scale(1.42) rotate(7deg); }
-  to { opacity: 0; transform: translateZ(620px) scale(3); }
+  from { opacity: .42; transform: translate3d(0, 0, 0) scale(1.04) rotate(7deg); }
+  to { opacity: 0; transform: translate3d(0, 0, 0) scale(1.2) rotate(8deg); }
 }
 @keyframes journey-stars-final-near {
-  from { opacity: var(--near-star-opacity); transform: translateZ(-80px) scale(1.1) rotate(-5deg); }
-  to { opacity: 0; transform: translateZ(620px) scale(3); }
+  from { opacity: var(--near-star-opacity); transform: translate3d(0, 0, 0) scale(1.02) rotate(-5deg); }
+  to { opacity: 0; transform: translate3d(0, 0, 0) scale(1.17) rotate(-6deg); }
 }
 @keyframes journey-tunnel-final {
   from { opacity: 1; transform: none; }
-  to { opacity: 0; transform: translateZ(620px) scale(3); }
+  to { opacity: 0; transform: translate3d(0, 0, 0) scale(1.18); }
 }
-@keyframes journey-final-light { 0% { opacity: .44; transform: translate(-50%, -50%) scale(1); } 68% { opacity: .95; transform: translate(-50%, -50%) scale(3.6); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(7); } }
+@keyframes journey-final-light { 0% { opacity: .38; } 68% { opacity: .95; } 100% { opacity: 0; } }
 @keyframes rare-sparkle { to { transform: rotate(360deg); } }
 @keyframes compliment-fade { from { opacity: 0; } }
 @keyframes compliment-rise { from { opacity: 0; transform: translateY(18px); } }
