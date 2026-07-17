@@ -574,7 +574,7 @@
     window.setTimeout(() => next.classList.remove("is-entering"), 560);
   }
 
-  function renderJourneyScene({ arriving = false } = {}) {
+  function renderJourneyScene() {
     const scene = journeyScenes[journeyIndex];
     root.dataset.journey = String(journeyIndex + 1);
     elements.journeySymbol.textContent = scene.symbol;
@@ -592,13 +592,10 @@
       return dot;
     });
     elements.journeyDots.replaceChildren(...dots);
+  }
 
-    if (arriving && state.motion !== "off") {
-      elements.journeyPanel.classList.remove("is-diving-out", "is-arriving");
-      void elements.journeyPanel.offsetWidth;
-      elements.journeyPanel.classList.add("is-arriving");
-      window.setTimeout(() => elements.journeyPanel.classList.remove("is-arriving"), 540);
-    }
+  function waitForPaint() {
+    return new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   }
 
   async function advanceJourney() {
@@ -606,30 +603,42 @@
     journeyLocked = true;
     elements.journeyNextButton.disabled = true;
     audio.play(journeyIndex === journeyScenes.length - 1 ? "sparkle" : "click");
-    elements.depthWorld.classList.add("is-advancing");
+    elements.depthWorld.classList.add("is-transitioning", "is-advancing");
     elements.journeyPanel.classList.add("is-diving-out");
 
-    const travelDelay = state.motion === "off" ? 10 : state.motion === "reduced" ? 260 : 460;
-    await new Promise((resolve) => window.setTimeout(resolve, travelDelay));
+    const outgoingDelay = state.motion === "off" ? 10 : state.motion === "reduced" ? 520 : 820;
+    const passagePause = state.motion === "off" ? 0 : state.motion === "reduced" ? 40 : 90;
+    const incomingDelay = state.motion === "off" ? 10 : state.motion === "reduced" ? 620 : 980;
+    await new Promise((resolve) => window.setTimeout(resolve, outgoingDelay));
 
     if (journeyIndex < journeyScenes.length - 1) {
+      elements.journeyPanel.classList.remove("is-diving-out");
+      elements.journeyPanel.classList.add("is-parked");
       journeyIndex += 1;
       elements.depthWorld.classList.remove("is-advancing");
-      renderJourneyScene({ arriving: true });
-      await new Promise((resolve) => window.setTimeout(resolve, state.motion === "off" ? 10 : state.motion === "reduced" ? 220 : 420));
+      elements.depthWorld.classList.add("is-arriving-world");
+      renderJourneyScene();
+      await waitForPaint();
+      await new Promise((resolve) => window.setTimeout(resolve, passagePause));
+      elements.journeyPanel.classList.remove("is-parked");
+      elements.journeyPanel.classList.add("is-arriving");
+      await new Promise((resolve) => window.setTimeout(resolve, incomingDelay));
+      elements.journeyPanel.classList.remove("is-arriving");
+      elements.depthWorld.classList.remove("is-arriving-world", "is-transitioning");
       elements.journeyNextButton.disabled = false;
       journeyLocked = false;
       return;
     }
 
+    elements.depthWorld.classList.remove("is-advancing");
     elements.depthWorld.classList.add("is-final-dive");
-    await new Promise((resolve) => window.setTimeout(resolve, state.motion === "off" ? 10 : 260));
+    await new Promise((resolve) => window.setTimeout(resolve, state.motion === "off" ? 10 : state.motion === "reduced" ? 440 : 660));
     await switchView(elements.complimentView, () => {
       body.classList.remove("is-journeying");
       delete root.dataset.journey;
     });
-    elements.depthWorld.classList.remove("is-advancing", "is-final-dive");
-    elements.journeyPanel.classList.remove("is-diving-out", "is-arriving");
+    elements.depthWorld.classList.remove("is-final-dive", "is-transitioning");
+    elements.journeyPanel.classList.remove("is-diving-out", "is-arriving", "is-parked");
     elements.journeyNextButton.disabled = false;
     nextCompliment();
     journeyLocked = false;

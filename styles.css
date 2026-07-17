@@ -1139,20 +1139,29 @@ html[data-journey="5"] .depth-world {
 }
 
 .journey-panel.is-diving-out {
-  animation: journey-panel-through 460ms cubic-bezier(.45, .02, .72, .35) both;
+  animation: journey-panel-through 820ms cubic-bezier(.42, 0, .76, .38) both;
   pointer-events: none;
   will-change: transform, opacity;
 }
 
+.journey-panel.is-parked {
+  opacity: 0;
+  transform: translateZ(-620px) scale(.68);
+}
+
 .journey-panel.is-arriving {
-  animation: journey-panel-arrive 520ms var(--ease-out) both;
+  animation: journey-panel-arrive 980ms cubic-bezier(.25, .55, .25, 1) both;
   will-change: transform, opacity;
 }
 
-.depth-world.is-advancing .depth-world__stars--far { animation: journey-stars-rush 460ms cubic-bezier(.2,.65,.3,1) both; }
-.depth-world.is-advancing .depth-world__stars--near { animation: journey-stars-rush-near 460ms cubic-bezier(.2,.65,.3,1) both; }
-.depth-world.is-advancing .depth-tunnel { animation: journey-tunnel-rush 460ms cubic-bezier(.2,.7,.25,1) both; }
-.depth-world.is-final-dive::after { animation: journey-final-light 520ms ease-out both; }
+.depth-world.is-transitioning::after { animation: journey-passage-glow 1900ms ease-in-out both; }
+.depth-world.is-advancing .depth-world__stars--far { animation: journey-stars-rush 820ms cubic-bezier(.24,.65,.32,1) both; }
+.depth-world.is-advancing .depth-world__stars--near { animation: journey-stars-rush-near 820ms cubic-bezier(.24,.65,.32,1) both; }
+.depth-world.is-advancing .depth-tunnel { animation: journey-tunnel-rush 820ms cubic-bezier(.24,.7,.3,1) both; }
+.depth-world.is-arriving-world .depth-world__stars--far { animation: journey-stars-settle 980ms cubic-bezier(.25,.55,.25,1) both; }
+.depth-world.is-arriving-world .depth-world__stars--near { animation: journey-stars-settle-near 980ms cubic-bezier(.25,.55,.25,1) both; }
+.depth-world.is-arriving-world .depth-tunnel { animation: journey-tunnel-settle 980ms cubic-bezier(.25,.55,.25,1) both; }
+.depth-world.is-final-dive::after { animation: journey-final-light 720ms ease-out both; }
 
 .random-promise {
   margin: 0 4px 16px;
@@ -1594,13 +1603,20 @@ html[data-time="night"] .night-moon { display: block; animation: moon-float 6s e
 @keyframes journey-view-enter { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: scale(1); } }
 @keyframes journey-panel-through {
   0% { opacity: 1; transform: translateZ(80px) scale(1); }
-  42% { opacity: 1; transform: translateZ(240px) scale(1.1); }
-  100% { opacity: 0; transform: translateZ(760px) scale(1.85); }
+  28% { opacity: 1; transform: translateZ(120px) scale(1.02); }
+  70% { opacity: 1; transform: translateZ(320px) scale(1.18); }
+  100% { opacity: 0; transform: translateZ(760px) scale(1.75); }
 }
 @keyframes journey-panel-arrive {
   from { opacity: 0; transform: translateZ(-620px) scale(.68); }
-  76% { opacity: 1; transform: translateZ(96px) scale(1.01); }
+  34% { opacity: .42; transform: translateZ(-250px) scale(.84); }
+  78% { opacity: 1; transform: translateZ(98px) scale(1.01); }
   to { opacity: 1; transform: translateZ(80px) scale(1); }
+}
+@keyframes journey-passage-glow {
+  0%, 100% { opacity: .44; transform: translate(-50%, -50%) scale(1); }
+  46% { opacity: .96; transform: translate(-50%, -50%) scale(3.7); }
+  54% { opacity: .9; transform: translate(-50%, -50%) scale(3.9); }
 }
 @keyframes journey-stars-rush {
   from { opacity: .42; transform: translateZ(-360px) scale(1.42) rotate(7deg); }
@@ -1611,6 +1627,18 @@ html[data-time="night"] .night-moon { display: block; animation: moon-float 6s e
   to { opacity: 0; transform: translateZ(520px) scale(3) rotate(-8deg); }
 }
 @keyframes journey-tunnel-rush { to { opacity: 0; transform: translateZ(520px) scale(2.8); } }
+@keyframes journey-stars-settle {
+  from { opacity: .08; transform: translateZ(420px) scale(2.8) rotate(9deg); }
+  to { opacity: .42; transform: translateZ(-360px) scale(1.42) rotate(7deg); }
+}
+@keyframes journey-stars-settle-near {
+  from { opacity: 0; transform: translateZ(520px) scale(3) rotate(-8deg); }
+  to { opacity: .24; transform: translateZ(-80px) scale(1.1) rotate(-5deg); }
+}
+@keyframes journey-tunnel-settle {
+  from { opacity: 0; transform: translateZ(520px) scale(2.8); }
+  to { opacity: 1; transform: none; }
+}
 @keyframes journey-final-light { 0% { opacity: .44; transform: translate(-50%, -50%) scale(1); } 55% { opacity: .95; transform: translate(-50%, -50%) scale(3.2); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(7); } }
 @keyframes rare-sparkle { to { transform: rotate(360deg); } }
 @keyframes compliment-fade { from { opacity: 0; } }
@@ -1665,11 +1693,15 @@ html[data-motion="reduced"] .journey-symbol {
 }
 
 html[data-motion="reduced"] .journey-panel.is-diving-out {
-  animation: view-leave 240ms ease both;
+  animation: view-leave 520ms ease both;
 }
 
 html[data-motion="reduced"] .journey-panel.is-arriving {
-  animation: view-enter 300ms var(--ease-out) both;
+  animation: view-enter 620ms cubic-bezier(.25, .55, .25, 1) both;
+}
+
+html[data-motion="reduced"] .depth-world.is-transitioning::after {
+  animation-duration: 1180ms;
 }
 
 html[data-motion="off"] *,
